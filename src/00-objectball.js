@@ -115,33 +115,42 @@ function gameObject() {
   };
 }
 
+const allPlayers = () => {
+  const playersCollection = {};
+
+  for (let location in gameObject()) {
+    let playersByTeamLocation = gameObject()[location].players;
+
+    for (let player in playersByTeamLocation) {
+      playersCollection[player] = playersByTeamLocation[player];
+    }
+  }
+  return playersCollection;
+};
+//to view all players => console.log(allPlayers());
+
+const getPlayerByName = (name) => { 
+  for(let player in allPlayers()){
+    if(player === name){return allPlayers()[player]}
+  } 
+}
+//to get a player by name => console.log("requested player stats: ", getPlayerByName("Brendan Haywood"))
+
+
+const numPointsScored = name => {return getPlayerByName(name)["points"]}
+//to get points by name => console.log("points scored: ", numPointsScored("Ben Gordon"))
+
+const shoeSize = name => {return getPlayerByName(name)["shoe"]}
+//to get shoe size by name => console.log("the shoe size is: ", shoeSize("Jeff Adrien"))
+
+
+//Non-iterative approach with declared function keyword
 const stats = gameObject();
 const homeTeamStats = stats.home;
 const homeTeamRoster = homeTeamStats.players;
 const awayTeamStats = stats.away;
 const awayTeamRoster = awayTeamStats.players;
 
-function numPointsScored(name) {
-  if (homeTeamRoster[name]) {
-    console.log(homeTeamRoster[name]["points"]);
-  } else if (awayTeamRoster[name]) {
-    console.log(awayTeamRoster[name]["points"]);
-  } else {
-    console.log("Sorry we do not currently have points stats for that player.");
-  }
-}
-
-function shoeSize(name) {
-  if (homeTeamRoster[name]) {
-    console.log(homeTeamRoster[name]["shoe"]);
-  } else if (awayTeamRoster[name]) {
-    console.log(awayTeamRoster[name]["shoe"]);
-  } else {
-    console.log(
-      "Sorry we do not currently have the shoe size for that player."
-    );
-  }
-}
 
 function teamColors(team) {
   if (homeTeamStats["teamName"] === team) {
@@ -159,7 +168,31 @@ function teamNames() {
   console.log([homeTeamStats.teamName, awayTeamStats.teamName]);
 }
 
-numPointsScored("Alan Anderson");
-shoeSize("Alan Anderson");
-teamColors("Brooklyn Nets");
-teamNames();
+
+//Redo:
+// function numPointsScored(name) {
+//   if (homeTeamRoster[name]) {
+//     console.log(homeTeamRoster[name]["points"]);
+//   } else if (awayTeamRoster[name]) {
+//     console.log(awayTeamRoster[name]["points"]);
+//   } else {
+//     console.log("Sorry we do not currently have points stats for that player.");
+//   }
+// }
+
+// function shoeSize(name) {
+//   if (homeTeamRoster[name]) {
+//     console.log(homeTeamRoster[name]["shoe"]);
+//   } else if (awayTeamRoster[name]) {
+//     console.log(awayTeamRoster[name]["shoe"]);
+//   } else {
+//     console.log(
+//       "Sorry we do not currently have the shoe size for that player."
+//     );
+//   }
+// }
+
+// numPointsScored("Alan Anderson");
+// shoeSize("Alan Anderson");
+// teamColors("Brooklyn Nets");
+// teamNames();
